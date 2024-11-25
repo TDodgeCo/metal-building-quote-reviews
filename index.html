@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en" x-data="{ darkMode: localStorage.getItem('darkMode') === 'true' ? localStorage.getItem('darkMode') === 'true' : window.matchMedia('(prefers-color-scheme: dark)').matches }" @load.window="darkMode = localStorage.getItem('darkMode') === 'true' ? localStorage.getItem('darkMode') === 'true' : window.matchMedia('(prefers-color-scheme: dark)').matches" @dark-mode-change.window="localStorage.setItem('darkMode', darkMode)" :class="{ 'dark': darkMode }">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metal Building Quote Reviews</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.10.3/dist/cdn.min.js"></script>
+    <style>
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.dark {
+            background-color: #1a1a1a;
+            color: #e5e5e5;
+        }
+
+        .button-green {
+            background-color: #32CD32;
+            color: #fff;
+            transition: background-color 0.3s, transform 0.3s;
+            width: 200px;
+            padding: 0.5rem;
+        }
+
+        .button-green:hover {
+            background-color: #28a745;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+        }
+
+        .hero-text {
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Form label colors */
+        label {
+            color: #333;
+        }
+
+        body.dark label {
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="bg-white py-4 dark:bg-gray-900 dark:text-white">
+        <div class="max-w-7xl mx-auto flex items-center justify-between px-4">
+            <div class="text-xl font-bold">Metal Building Quote Reviews</div>
+            <div class="hidden md:flex space-x-6">
+                <a href="#home" class="text-lg text-gray-700 dark:text-gray-300">Home</a>
+                <a href="#about" class="text-lg text-gray-700 dark:text-gray-300">About</a>
+                <a href="#services" class="text-lg text-gray-700 dark:text-gray-300">Services</a>
+                <a href="#quote" class="text-lg text-gray-700 dark:text-gray-300">Quotes</a>
+            </div>
+            <button class="button-green px-4 py-2 rounded font-semibold">GET STARTED</button>
+        </div>
+    </nav>
+
+    <!-- Home Hero Section -->
+    <section id="home" class="h-screen bg-cover bg-center relative" style="background-image: url('/images/blurred_barndominium.png');">
+        <div class="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black opacity-70"></div>
+        <div class="max-w-7xl mx-auto flex flex-col lg:flex-row justify-between items-center h-full px-10 gap-16 relative z-10">
+            <div class="text-white lg:w-1/2 text-left hero-text p-10">
+                <h1 class="text-5xl font-extrabold mb-4">Let's Review Your Steel Building Quote</h1>
+                <p class="text-2xl mb-8">Get honest, straightforward feedback on your steel building quotes from someone who knows the industry inside and out.</p>
+                <div class="flex space-x-8">
+                    <div class="flex flex-col items-center">
+                        <span class="text-lg font-bold">Quote Review Streams</span>
+                        <button @click="$refs.scheduleModal.show()" class="button-green rounded">VIEW SCHEDULE</button>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <span class="text-lg font-bold">Free 1 on 1 Reviews</span>
+                        <a href="https://outlook.office.com/bookwithme/user/003def59aa394012bf237112d79ea589@sunwardsteel.com/meetingtype/6FYtnfKzMUCa4pJuzd9V8Q2?bookingcode=862823c9-b9d2-4310-8bd5-f3067fdce46a&anonymous&ep=mlink"
+                            class="button-green rounded text-center">BOOK NOW</a>
+                    </div>
+                </div>
+            </div>
+            <div class="lg:w-2/5 w-full bg-gradient-to-b from-gray-800 to-gray-700 p-8 rounded-lg shadow-lg mt-10 lg:mt-0">
+                <form @submit.prevent="submitForm" class="space-y-3">
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-white">Name:</label>
+                        <input type="text" id="name" name="name" required
+                            class="w-full px-2 py-1 border rounded bg-gray-700 border-gray-600 text-white">
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-white">Email:</label>
+                        <input type="email" id="email" name="email" required
+                            class="w-full px-2 py-1 border rounded bg-gray-700 border-gray-600 text-white">
+                    </div>
+                    <div class="col-span-2">
+                        <label for="quote_docs" class="block text-sm font-medium text-white">Upload Your Quote Documents:</label>
+                        <input type="file" id="quote_docs" name="quote_docs" multiple
+                            class="w-full px-4 py-2 border rounded dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                        <p class="text-xs text-gray-500 mt-2 dark:text-gray-400">Please provide all documents for each quote. You may mark out personal information.</p>
+                    </div>
+                    <div class="col-span-2">
+                        <label for="notes" class="block text-sm font-medium text-white">Tell me about your project</label>
+                        <textarea id="notes" name="notes" rows="4"
+                            class="w-full px-4 py-2 border rounded dark:bg-gray-700 dark:border-gray-600 dark:text-white"></textarea>
+                    </div>
+                    <div class="flex items-center col-span-2">
+                        <input type="checkbox" id="no_pressure_quote" name="no_pressure_quote" class="mr-2">
+                        <label for="no_pressure_quote" class="text-sm text-white">I'd be interested in a better quote.</label>
+                    </div>
+                    <button type="submit" class="button-green w-full py-3 rounded font-semibold col-span-2">SUBMIT FOR REVIEW</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="bg-white py-12 dark:bg-gray-900 dark:text-white">
+        <div class="max-w-7xl mx-auto text-center px-4">
+            <h2 class="text-3xl font-bold mb-4">Get Personalized Steel Building Advice</h2>
+            <h3 class="text-xl mb-6">No sales tactics. No nonsense. Just honest advice to help you make the best decision.</h3>
+            <p class="text-lg mb-8">I'm Tim, and I've spent my entire career working with steel buildings. I review quotes to
+                help you avoid the pitfalls, spot red flags, and find the best value for your money. Whether you're looking for a
+                second opinion or need some guidance, I'm here to help. If I think I can get you a better deal, I'll let you
+                know—no pressure, no gimmicks, just honest advice.</p>
+            <div class="text-left">
+                <h4 class="text-2xl font-bold mb-4">Why Trust Me?</h4>
+                <ul class="list-disc list-inside">
+                    <li>Over a decade of hands-on experience in the steel building industry.</li>
+                    <li>Co-founded a major metal building manufacturer in the Southwest.</li>
+                    <li>Currently working with a well-established manufacturer that's been around for over 50 years.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services">
+        <div class="bg-slate-800 py-24 sm:py-32">
+            <div class="mx-auto max-w-7xl px-6 lg:px-8">
+                <div class="mx-auto max-w-2xl lg:mx-0">
+                    <h2 class="text-pretty text-4xl font-semibold tracking-tight text-white sm:text-5xl">What I Can Do for You</h2>
+                    <p class="mt-6 text-lg/8 text-gray-300">No sales tactics. No nonsense. Just honest advice to help you make the best decision for your steel building project.</p>
+                </div>
+                <div class="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
+                    <dl class="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-3">
+                        <div class="flex flex-col">
+                            <dt class="text-base/7 font-semibold text-white">
+                                <div class="mb-6 flex size-10 items-center justify-center rounded-lg bg-indigo-600">
+                                    <svg class="size-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 13.5h3.86a2.25 2.25 0 0 1 2.012 1.244l.256.512a2.25 2.25 0 0 0 2.013 1.244h3.218a2.25 2.25 0 0 0 2.013-1.244l.256-.512a2.25 2.25 0 0 1 2.013-1.244h3.859m-19.5.338V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 0 0-2.15-1.588H6.911a2.25 2.25 0 0 0-2.15 1.588L2.35 13.177a2.25 2.25 0 0 0-.1.661Z" />
+                                    </svg>
+                                </div>
+                                Live Q&A Sessions
+                            </dt>
+                            <dd class="mt-1 flex flex-auto flex-col text-base/7 text-gray-300">
+                                <p class="flex-auto">Ask me anything about your steel building project during live Q&A sessions.</p>
+                            </dd>
+                        </div>
+                        <div class="flex flex-col">
+                            <dt class="text-base/7 font-semibold text-white">
+                                <div class="mb-6 flex size-10 items-center justify-center rounded-lg bg-indigo-600">
+                                    <svg class="size-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
+                                    </svg>
+                                </div>
+                                Quote Reviews
+                            </dt>
+                            <dd class="mt-1 flex flex-auto flex-col text-base/7 text-gray-300">
+                                <p class="flex-auto">Get detailed feedback on your quotes live on stream or via email. Whatever works best for you.</p>
+                            </dd>
+                        </div>
+                        <div class="flex flex-col">
+                            <dt class="text-base/7 font-semibold text-white">
+                                <div class="mb-6 flex size-10 items-center justify-center rounded-lg bg-indigo-600">
+                                    <svg class="size-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                    </svg>
+                                </div>
+                                1-on-1 Project Reviews
+                            </dt>
+                            <dd class="mt-1 flex flex-auto flex-col text-base/7 text-gray-300">
+                                <p class="flex-auto">Let's dive into the details of your entire project together.</p>
+                            </dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Secondary Submission Section -->
+    <section id="quote" class="bg-white py-12 dark:bg-gray-900 dark:text-white">
+        <div class="max-w-7xl mx-auto flex flex-col lg:flex-row px-4">
+            <div class="lg:w-1/3 mb-8 lg:mb-0">
+                <h2 class="text-3xl font-bold mb-6">Get Your Quote Reviewed</h2>
+                <form @submit.prevent="submitForm" class="space-y-6">
+                    <!-- Same form as in hero section -->
+                    <div>
+                        <label for="name" class="block text-sm font-medium">Name:</label>
+                        <input type="text" id="name" name="name" required
+                            class="w-full px-4 py-2 border rounded dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm font-medium">Email:</label>
+                        <input type="email" id="email" name="email" required
+                            class="w-full px-4 py-2 border rounded dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                    </div>
+                    <div>
+                        <label for="building_use" class="block text-sm font-medium">Building Use:</label>
+                        <input type="text" id="building_use" name="building_use" required
+                            class="w-full px-4 py-2 border rounded dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                    </div>
+                    <div>
+                        <label for="notes" class="block text-sm font-medium">Notes:</label>
+                        <textarea id="notes" name="notes" rows="4"
+                            class="w-full px-4 py-2 border rounded dark:bg-gray-700 dark:border-gray-600 dark:text-white"></textarea>
+                    </div>
+                    <div>
+                        <label for="quote_docs" class="block text-sm font-medium">Upload Your Quote Documents:</label>
+                        <input type="file" id="quote_docs" name="quote_docs" multiple
+                            class="w-full px-4 py-2 border rounded dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                    </div>
+                    <div class="flex items-center">
+                        <input type="checkbox" id="no_pressure_quote" name="no_pressure_quote" class="mr-2">
+                        <label for="no_pressure_quote" class="text-sm">I would like a no pressure quote on a metal building if
+                            better value is available.</label>
+                    </div>
+                    <button type="submit" class="button-green w-full py-3 rounded font-bold">SUBMIT FOR REVIEW</button>
+                </form>
+            </div>
+            <div class="lg:w-1/2 lg:pl-10">
+                <h3 class="text-xl font-bold mb-4">Need a Quote?</h3>
+                <button @click="$refs.quoteModal.show()" class="button-green px-6 py-3 rounded mb-4">GET A QUOTE</button>
+                <p class="text-gray-600 dark:text-gray-300">Schedule an initial meeting to go over the details of your project for
+                    a custom quote.</p>
+                <h3 class="text-xl font-bold mt-8">Book With Me</h3>
+                <a href="https://outlook.office.com/bookwithme/user/003def59aa394012bf237112d79ea589@sunwardsteel.com/meetingtype/6FYtnfKzMUCa4pJuzd9V8Q2?bookingcode=862823c9-b9d2-4310-8bd5-f3067fdce46a&anonymous&ep=mlink"
+                    class="button-green mt-4 block text-center">VIEW AVAILABILITY</a>
+                <ul class="mt-4 space-y-1">
+                    <li>Monday to Friday: 1:30pm - 9:00pm</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Placeholder for AlpineJS Modals -->
+    <div x-ref="scheduleModal" x-data="{ open: false }" @show.window="open = true"
+        class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center" x-show="open">
+        <div class="bg-white p-6 rounded dark:bg-gray-800 dark:text-white">
+            <h2 class="text-xl font-bold mb-4">Live Stream Schedule</h2>
+            <p>Placeholder for the live stream schedule details...</p>
+            <button class="button-green mt-6" @click="open = false">CLOSE</button>
+        </div>
+    </div>
+</body>
+
+</html>
